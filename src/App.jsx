@@ -80,6 +80,7 @@ const WORD_QUERY = gql`
 
 const App = () => {
   const [currentQuery, setCurrentQuery] = useState(null);
+  const [currentResult, setCurrentResult] = useState(null);
 
   const [fetchUsers, { data: usersData }] = useLazyQuery(USERS_QUERY);
   const [fetchUserId, { data: userData }] = useLazyQuery(USERID_QUERY);
@@ -93,27 +94,35 @@ const App = () => {
   useEffect(() => {
     if (currentQuery === 'users' && usersData) {
       console.log(usersData.users);
+      setCurrentResult(usersData.users);
     }
     if (currentQuery === 'userId' && userData) {
       console.log(userData.user);
+      setCurrentResult(userData.user);
     }
     if (currentQuery === 'register' && registerData) {
       console.log(registerData.register);
+      setCurrentResult(registerData.register);
     }
     if (currentQuery === 'login' && loginData) {
       console.log(loginData.login);
+      setCurrentResult(loginData.login);
     }
     if (currentQuery === 'sets' && setsData) {
       console.log(setsData.sets);
+      setCurrentResult(setsData.sets);
     }
     if (currentQuery === 'setId' && setData) {
       console.log(setData.set);
+      setCurrentResult(setData.set);
     }
     if (currentQuery === 'createSet' && createSetData) {
       console.log(createSetData.createSet);
+      setCurrentResult(createSetData.createSet);
     }
     if (currentQuery === 'word' && wordData) {
       console.log(wordData.word);
+      setCurrentResult(wordData.word);
     }
   }, [currentQuery, usersData, userData, registerData, loginData, setsData, setData, createSetData, wordData]);
 
@@ -153,6 +162,10 @@ const App = () => {
         <h2>Word</h2>
         <button onClick={() => { setCurrentQuery('word'); fetchWord(); }}>Send request</button>
       </div>
+
+      <p>
+        { JSON.stringify(currentResult) }
+      </p>
     </>
   );
 };
